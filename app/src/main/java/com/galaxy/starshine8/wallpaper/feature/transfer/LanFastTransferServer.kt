@@ -1,4 +1,4 @@
-package com.galaxy.starshine8.wallpaper.feature.transfer
+﻿package com.galaxy.starshine8.wallpaper.feature.transfer
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -153,7 +153,7 @@ class LanFastTransferServer(
         }
     }
 
-    private fun handleClientSocket(client: Socket) {
+    private suspend fun handleClientSocket(client: Socket) {
         client.use { sock ->
             sock.soTimeout = 15_000
             val input = BufferedInputStream(sock.getInputStream())
@@ -773,3 +773,4 @@ class LanFastTransferServer(
 </html>
     """.trimIndent()
 }
+

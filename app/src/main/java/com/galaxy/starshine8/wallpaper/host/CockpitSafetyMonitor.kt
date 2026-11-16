@@ -1,4 +1,4 @@
-package com.galaxy.starshine8.wallpaper.host
+﻿package com.galaxy.starshine8.wallpaper.host
 
 import android.animation.ValueAnimator
 import android.app.UiModeManager
@@ -12,6 +12,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
 import android.view.animation.DecelerateInterpolator
+import androidx.core.content.ContextCompat
 import com.galaxy.starshine8.wallpaper.core.contract.CockpitEnvironmentState
 import com.galaxy.starshine8.wallpaper.core.contract.DynamicSceneRenderer
 import com.galaxy.starshine8.wallpaper.core.render.StarshineGlSceneRenderer
@@ -113,7 +114,7 @@ class CockpitSafetyMonitor(
                 addAction(UiModeManager.ACTION_ENTER_CAR_MODE)
                 addAction(UiModeManager.ACTION_EXIT_CAR_MODE)
             }
-            context.registerReceiver(cockpitBroadcastReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+            ContextCompat.registerReceiver(context, cockpitBroadcastReceiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED)
             isReceiverRegistered = true
         }
         audioPulseProvider.start()
@@ -244,3 +245,4 @@ class CockpitSafetyMonitor(
         )
     }
 }
+

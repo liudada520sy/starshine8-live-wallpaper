@@ -1,4 +1,4 @@
-package com.galaxy.starshine8.wallpaper.host
+﻿package com.galaxy.starshine8.wallpaper.host
 
 import android.Manifest
 import android.app.WallpaperManager
@@ -217,7 +217,7 @@ class ImmersiveShowcaseActivity : ComponentActivity() {
                             }
                         )
                         transferState.lastErrorMessage != null -> CockpitWorkbenchUiState.RecoverableError(
-                            userFriendlyMessage = transferState.lastErrorMessage
+                            userFriendlyMessage = transferState.lastErrorMessage!!
                         )
                         transferState.stage != LanFastTransferServer.TransferStage.IDLE &&
                             transferState.stage != LanFastTransferServer.TransferStage.COMPLETED ->
@@ -520,3 +520,4 @@ class ImmersiveShowcaseActivity : ComponentActivity() {
         }
     }
 }
+

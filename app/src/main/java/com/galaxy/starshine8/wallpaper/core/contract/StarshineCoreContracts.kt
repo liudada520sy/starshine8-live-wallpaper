@@ -1,4 +1,4 @@
-package com.galaxy.starshine8.wallpaper.core.contract
+﻿package com.galaxy.starshine8.wallpaper.core.contract
 
 import android.graphics.Bitmap
 import kotlinx.serialization.Serializable
@@ -11,7 +11,7 @@ sealed interface DomainResult<out T, out E> {
     data class Success<out T>(val value: T) : DomainResult<T, Nothing>
     data class Failure<out E>(val error: E) : DomainResult<Nothing, E>
 
-    inline fun <R> fold(onSuccess: (T) -> R, onFailure: (E) -> R): R = when (this) {
+    fun <R> fold(onSuccess: (T) -> R, onFailure: (E) -> R): R = when (this) {
         is Success -> onSuccess(value)
         is Failure -> onFailure(error)
     }
@@ -173,3 +173,4 @@ data class LoadedWallpaperBundle(
     val depthBitmap: Bitmap,
     val phaseBVideoFile: File? = null
 )
+
