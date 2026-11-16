@@ -1,0 +1,41 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "方案A-1: 连接网易 MuMu 模拟器 12 (ADB 16384)",
+      "type": "shell",
+      "command": "adb connect 127.0.0.1:16384 && adb devices",
+      "problemMatcher": []
+    },
+    {
+      "label": "方案A-2: 编译并安装运行星耀8动态壁纸 (Gradle Install & Launch)",
+      "type": "shell",
+      "command": "gradle installDebug && adb forward tcp:8980 tcp:8980 && adb shell am start -n com.galaxy.starshine8.wallpaper/.host.ImmersiveShowcaseActivity",
+      "problemMatcher": []
+    },
+    {
+      "label": "方案A-3: 切换夜间/隧道大灯防眩光模式 (-35% 压暗)",
+      "type": "shell",
+      "command": "adb shell cmd uimode night yes",
+      "problemMatcher": []
+    },
+    {
+      "label": "方案A-4: 恢复日间 2.5K 满血光感模式",
+      "type": "shell",
+      "command": "adb shell cmd uimode night no",
+      "problemMatcher": []
+    },
+    {
+      "label": "方案A-5: 运行 ADR-001 架构与零占位符校验",
+      "type": "shell",
+      "command": "python3 scripts/verify_project_structure.py",
+      "problemMatcher": []
+    },
+    {
+      "label": "方案A-6: 启动 Phase B 外部算力协同服务端 (FastAPI)",
+      "type": "shell",
+      "command": "python3 remote-aigc-server/main.py",
+      "problemMatcher": []
+    }
+  ]
+}

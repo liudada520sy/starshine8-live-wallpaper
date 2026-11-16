@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.galaxy.starshine8.wallpaper">
+
+    <!-- 局域网扫码快传与 Phase B 算力节点 mDNS 发现权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <!-- 音频频谱律动采集权限（若拒绝则自动回退至 Tier 3 东方呼吸节拍发生器） -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+
+    <!-- 声明支持 OpenGL ES 3.0 与动态壁纸特性 -->
+    <uses-feature
+        android:glEsVersion="0x00030000"
+        android:required="true" />
+    <uses-feature
+        android:name="android.software.live_wallpaper"
+        android:required="false" />
+
+    <application
+        android:allowBackup="false"
+        android:hardwareAccelerated="true"
+        android:largeHeap="true"
+        android:label="星耀画卷·动态壁纸"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+
+        <!-- 宿主 1：系统级动态壁纸服务 (WallpaperService) -->
+        <service
+            android:name=".host.StarshineWallpaperService"
+            android:enabled="true"
+            android:exported="true"
+            android:label="星耀8·东方美学动态壁纸"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/starshine_wallpaper" />
+        </service>
+
+        <!-- 宿主 2：全屏沉浸式驻车画报与 15.4 寸 2560x1600 工作台 (ImmersiveShowcaseActivity) -->
+        <activity
+            android:name=".host.ImmersiveShowcaseActivity"
+            android:configChanges="orientation|screenSize|screenLayout|uiMode|density"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+    </application>
+</manifest>

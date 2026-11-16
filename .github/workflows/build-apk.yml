@@ -1,0 +1,49 @@
+name: Build Starshine 8 Live Wallpaper APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  verify-and-build-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Python 3.11 for OEM verification
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run P0/P1/P2 static, boundary & WCAG audits
+        run: |
+          python3 scripts/verify_project_structure.py
+          python3 scripts/scaffold_vertical_slices.py --check-boundaries
+          python3 scripts/audit_image_and_theme.py
+
+      - name: Set up Gradle 8.7
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Run JVM unit tests & build Debug APK
+        run: gradle testDebugUnitTest assembleDebug --no-daemon --stacktrace
+
+      - name: Upload app-debug.apk artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: starshine8-live-wallpaper-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30
